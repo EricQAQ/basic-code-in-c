@@ -19,7 +19,7 @@ void StringFree(char *addr) {
 }
 
 
-void StackNew_(stack_ *s, int elementSize, void *freefunc(void *)) {
+void StackNew_(stack_ *s, int elementSize, void (*freefunc)(void *)) {
     /*
      * freefunc 是处理动态申请内存的函数,
      * 如果栈的元素的类型并不需要动态申请内存,比如int,double,float等,这个参数设置为NULL
@@ -28,6 +28,7 @@ void StackNew_(stack_ *s, int elementSize, void *freefunc(void *)) {
     s->logic_length = 0;
     s->alloc_length = 4;
     s->element = malloc(4 * s->elementSize);
+    s->freefunc = freefunc;
 
     assert(s->element != NULL);
 }
